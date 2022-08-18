@@ -1,7 +1,17 @@
 import sys
 import json
 
-def top_retweeted(json):
+def top_retweeted(json_file):
+    i = 0
+    tweet_info = load_json(json_file, i)
+    while tweet_info != -1:
+        print(tweet_info["retweetCount"])
+
+        i += 1
+        tweet_info = load_json(json_file, i)
+
+    return "hola"
+
     pass
 
 def top_users(json):
@@ -13,23 +23,21 @@ def top_days(json):
 def top_hashtags(json):
     pass
 
-def load_json(file_name, n):
-    file = open(file_name)
-    lineas = file.readlines()
+def load_json(lineas, n):
     if n < len(lineas):
         data = json.loads(lineas[n])
-        file.close()
         return data
     else:
-        file.close()
+
         return -1
 
 
 def main(name, json_file):
-    data = load_json(json_file, 0)
-    print(data)
-    print(type(data))
-    print(name(data))
+    file = open(json_file)
+    lineas = file.readlines()
+
+    print(name(lineas))
+    file.close()
 
 
 if __name__ == "__main__":
