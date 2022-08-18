@@ -89,8 +89,45 @@ def top_days(json_file):
     days.sort(reverse=True)
     return days[:10]
 
-def top_hashtags(json):
-    pass
+def top_hashtags(json_file):
+    all_hashtags = {}
+
+    i = 0
+    tweet_info = load_json(json_file, i)
+
+    while tweet_info != -1:
+        hashtags = []
+        tweet = tweet_info["content"]
+        ht = False
+        hashtag = ""
+        for c in tweet:
+            if c == "#" and not ht:
+                ht = True
+                hashtag += c
+            elif ht and c != " ":
+                hashtag += c
+            elif ht and c == " ":
+                ht = False
+                hashtags.append(hashtag)
+                hashtag = ""
+
+        for ht in hashtags:
+            if not ht in all_hashtags.keys():
+                all_hashtags[ht] = 1
+            else:
+                all_hashtags[ht] += 1
+
+        i += 1
+        tweet_info = load_json(json_file, i)
+
+    print(all_hashtags)
+    hashtags = []
+
+    for k, v in all_hashtags.items():
+        hashtags.append([v, k])
+
+    hashtags.sort(reverse=True)
+    return hashtags[:10]
 
 def load_json(lineas, n):
     if n < len(lineas):
