@@ -71,7 +71,6 @@ def top_days(json_file):
     tweet_info = load_json(json_file, i)
 
     while tweet_info != -1:
-        print(tweet_info["date"][:10])
         if not tweet_info["date"][:10] in all_days.keys():
             all_days[tweet_info["date"][:10]] = 1
         else:
@@ -80,7 +79,6 @@ def top_days(json_file):
         i += 1
         tweet_info = load_json(json_file, i)
 
-    print(all_days)
     days = []
 
     for k, v in all_days.items():
@@ -120,7 +118,6 @@ def top_hashtags(json_file):
         i += 1
         tweet_info = load_json(json_file, i)
 
-    print(all_hashtags)
     hashtags = []
 
     for k, v in all_hashtags.items():
