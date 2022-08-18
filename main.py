@@ -41,8 +41,28 @@ def top_retweeted(json_file):
 
     return top_10_tweets
 
-def top_users(json):
-    pass
+def top_users(json_file):
+    all_users = {}
+
+    i = 0
+    tweet_info = load_json(json_file, i)
+
+    while tweet_info != -1:
+        if not tweet_info["user"]["username"] in all_users.keys():
+            all_users[tweet_info["user"]["username"]] = 1
+        else:
+            all_users[tweet_info["user"]["username"]] += 1
+
+        i += 1
+        tweet_info = load_json(json_file, i)
+
+    users = []
+
+    for k, v in all_users.items():
+        users.append([v, k])
+
+    users.sort(reverse=True)
+    return users[:10]
 
 def top_days(json):
     pass
