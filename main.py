@@ -64,8 +64,30 @@ def top_users(json_file):
     users.sort(reverse=True)
     return users[:10]
 
-def top_days(json):
-    pass
+def top_days(json_file):
+    all_days = {}
+
+    i = 0
+    tweet_info = load_json(json_file, i)
+
+    while tweet_info != -1:
+        print(tweet_info["date"][:10])
+        if not tweet_info["date"][:10] in all_days.keys():
+            all_days[tweet_info["date"][:10]] = 1
+        else:
+            all_days[tweet_info["date"][:10]] += 1
+
+        i += 1
+        tweet_info = load_json(json_file, i)
+
+    print(all_days)
+    days = []
+
+    for k, v in all_days.items():
+        days.append([v, k])
+
+    days.sort(reverse=True)
+    return days[:10]
 
 def top_hashtags(json):
     pass
